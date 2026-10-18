@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Tab Dupes Begone</title>
+  <link rel="stylesheet" href="ui.css">
+  <script type="module" src="popup.js"></script>
+</head>
+<body class="popup">
+  <header class="brand">
+    <img src="icons/icon-48.png" width="32" height="32" alt="">
+    <div>
+      <h1>Tab Dupes Begone</h1>
+      <p class="tagline">Already open? Switch to it instead of opening a duplicate.</p>
+    </div>
+  </header>
+
+  <h2 class="section-title">Switch to the open tab for…</h2>
+  <div id="toggles" class="toggles"></div>
+
+  <details class="info">
+    <summary>What never switches</summary>
+    <ul>
+      <li>Right-click a tab → <b>Duplicate</b>.</li>
+      <li>Reopening a closed tab (<kbd>Cmd/Ctrl-Shift-T</kbd>).</li>
+      <li>A page opening a tab by itself, without your click (<code>window.open</code>).</li>
+      <li>Typing a URL into a tab already showing a page — Chrome’s own “Switch to tab” suggestion
+        handles that.</li>
+    </ul>
+    <p>Matching is by exact URL: <code>…/repo</code> and <code>…/repo#readme</code> are different
+      pages.</p>
+  </details>
+
+  <footer>
+    <a href="welcome.html" id="why">Why does this need site access?</a>
+  </footer>
+</body>
+</html>

@@ -1,7 +1,7 @@
 {
   "name": "tab-dupes-begone",
-  "version": "1.0.0",
-  "description": "Chrome extension: links from desktop apps switch to the tab you already have open instead of opening a duplicate.",
+  "version": "2.0.0",
+  "description": "Chrome extension: switch to the tab you already have open instead of opening a duplicate, with a toggle per kind of link.",
   "license": "MIT",
   "author": "Sabbir Siddiqui (https://github.com/siddiqus)",
   "homepage": "https://github.com/siddiqus/tab-dupes-begone#readme",

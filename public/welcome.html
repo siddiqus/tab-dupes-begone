@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Welcome to Tab Dupes Begone</title>
+  <link rel="stylesheet" href="ui.css">
+  <script type="module" src="welcome.js"></script>
+</head>
+<body class="page">
+  <main>
+    <header class="brand">
+      <img src="icons/icon-128.png" width="64" height="64" alt="">
+      <div>
+        <h1>Tab Dupes Begone</h1>
+        <p class="tagline">Already open? Switch to it instead of opening a duplicate.</p>
+      </div>
+    </header>
+
+    <section>
+      <h2>What it does</h2>
+      <p>When you open a page you already have open in another tab, Tab Dupes Begone switches you to that tab
+        instead of opening a second copy. You choose below which kinds of links and actions this
+        applies to. Matching is by exact URL, and duplicates you make on purpose (such as right-click
+        → <b>Duplicate</b>) are left alone.</p>
+    </section>
+
+    <section>
+      <h2>Why Chrome said “Read and change all your data on all websites”</h2>
+      <p>To tell what kind of link you clicked, the extension runs a small script on web pages. That
+        script only notices link clicks: which link, which modifier keys you held, and whether it
+        opens in a new tab. It uses that to decide whether to switch tabs.</p>
+      <ul>
+        <li>It never reads page content.</li>
+        <li>Only the last link clicked in each tab is remembered, in session storage, until the tab
+          closes.</li>
+        <li>Your switch settings sync with your Chrome profile. Nothing else leaves your device.</li>
+      </ul>
+      <p>The code is open source:
+        <a href="https://github.com/siddiqus/tab-dupes-begone" target="_blank" rel="noopener">github.com/siddiqus/tab-dupes-begone</a>.</p>
+    </section>
+
+    <section>
+      <h2>Switch to the open tab for…</h2>
+      <div id="toggles" class="toggles"></div>
+      <p class="note">Pin the extension icon to change these later.</p>
+    </section>
+  </main>
+</body>
+</html>
