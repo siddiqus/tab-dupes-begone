@@ -7,27 +7,40 @@ Copy-paste source for the Developer Dashboard. Keep in sync with the README when
 **Name:** Tab Dupes Begone
 
 **Summary** (max 132 chars):
-> Links from Slack, Mail, web pages and more switch to the tab you already have open. Choose which kinds of links it applies to.
+> Already have that page open? Switch to it instead of opening a duplicate. Works for links from Slack, Mail, web pages and more.
 
 **Category:** Productivity → Tools
 
 **Language:** English
 
 **Description:**
-> Clicked the same link in Slack five times? You'd normally get five identical tabs. Tab Dupes Begone switches you to the tab you already have open instead.
->
-> Choose, from the toolbar popup, which kinds of links this applies to:
-> • Links from desktop apps (Slack, Mail, Teams, Zoom, and more) and installed web apps — on by default
-> • Links that open in a new tab — on by default
-> • Cmd/Ctrl-click, middle-click, "Open link in new tab" — off by default
-> • Regular links that open in the same tab — off by default
-> • Typing a URL into a new tab — off by default
->
-> Right-click → Duplicate, reopening a closed tab, and tabs a page opens without your click are always left alone.
->
-> Why "Read and change all your data on all websites"? A small script on each page notices which link you clicked and which modifier keys you held, so it can switch tabs before a duplicate opens. It never reads page content, and nothing leaves your device.
->
-> Exact URL matching. No data collected. Open source: https://github.com/siddiqus/tab-dupes-begone
+```
+Clicked the same link in Slack five times? You'd normally get five identical tabs. Tab Dupes Begone switches you to the tab you already have open instead.
+
+CHOOSE WHEN IT SWITCHES
+From the toolbar popup, turn each one on or off:
+• Links from desktop apps (Slack, Mail, Teams, Zoom…) and installed web apps (on by default)
+• Links that open in a new tab (on by default)
+• Cmd/Ctrl-click, middle-click, and "Open link in new tab" (off by default)
+• Regular links that open in the same tab (off by default)
+• Typing a URL into a new tab (off by default)
+
+ALWAYS LEFT ALONE
+Right-click → Duplicate, reopening a closed tab (Cmd/Ctrl-Shift-T), and tabs a page opens without your click.
+
+EXACT MATCHING
+Only an exact URL match counts. github.com/foo and github.com/foo#readme are treated as different pages.
+
+WHY "READ AND CHANGE ALL YOUR DATA ON ALL WEBSITES"?
+To catch a duplicate before it opens, a small script on each page notices which link you clicked and which keys you held. It never reads page content. Nothing is collected or sent anywhere. Your on/off settings sync through your own Chrome profile, like any extension setting.
+
+NEW IN 2.0
+• Per-trigger settings in the toolbar popup
+• Links on web pages can now switch to the open tab, not just links from desktop apps
+• Chrome will ask you to approve site access when updating. This is what makes switching on web-page links possible.
+
+Open source: https://github.com/siddiqus/tab-dupes-begone
+```
 
 **Graphic assets** (regenerate with `scripts/render-store-assets.sh`):
 - Store icon 128×128: `assets/store/store-icon-128.png`
@@ -41,12 +54,20 @@ Copy-paste source for the Developer Dashboard. Keep in sync with the README when
 **Single purpose:**
 > Prevents duplicate tabs: when a link or URL the user opens points to a page that is already open, it switches to the existing tab instead. The user chooses which kinds of links this applies to.
 
-**Permission justifications:**
-- `tabs` — Read tab URLs and window types to detect that a link or new tab exactly matches an already-open tab, then activate that tab and close the duplicate.
-- `webNavigation` — Read the navigation transition type and which tab spawned a new tab, to tell whether a tab came from a desktop app, from a page right after a click, or from a URL typed into a new tab.
-- `scripting` — Inject the extension's own bundled content script into tabs that were already open when the extension is installed or updated, so link clicks there are handled without a reload. No remote code.
-- `storage` — Save the user's on/off settings in `chrome.storage.sync`, and keep per-tab bookkeeping (tabs being checked, each tab's last link click) in `chrome.storage.session`, which is cleared when the browser closes.
-- Host permission `<all_urls>` — Run a content script on web pages that observes link clicks (link URL and target, mouse button, modifier keys) so the extension can classify the click and, when the user's setting is on and the URL is already open, cancel it and switch to the existing tab. It does not read page content and sends nothing off the device. Needed on all sites because any page can link to a page the user already has open.
+**tabs justification:**
+> Reads tab URLs and window types to detect that a link or new tab exactly matches an already-open tab, then activates that tab and closes the duplicate.
+
+**webNavigation justification:**
+> Reads the navigation transition type and which tab spawned a new tab, to tell whether a tab came from a desktop app, from a page right after a click, or from a URL typed into a new tab.
+
+**storage justification:**
+> Saves the user's on/off settings in chrome.storage.sync, and keeps per-tab bookkeeping (tabs being checked, each tab's last link click) in chrome.storage.session, which is cleared when the browser closes.
+
+**scripting justification:**
+> Injects the extension's own bundled content script (content.js, the same file declared in the manifest) into tabs that were already open when the extension is installed, updated, or re-enabled. Without this, link clicks in those tabs would not be handled until each tab is reloaded. No remote or dynamically generated code is executed.
+
+**Host permission justification:**
+> The extension runs a content script on web pages so it can tell which link the user clicked and how: the link URL and target, the mouse button, and the modifier keys held. With that, it decides whether the click matches one of the user's enabled settings (for example a plain click on a link that opens in a new tab, versus a Cmd/Ctrl-click). If it does and the URL is already open, it cancels the click and switches to the existing tab, so no duplicate tab is created. The script does not read or modify page content and sends nothing off the device; click details are only passed to the extension's own background service worker. Access is needed on all sites because any page can link to a page the user already has open.
 
 **Remote code:** No, I am not using remote code.
 
